@@ -13,7 +13,7 @@ class Item extends Component {
             <p className="cost">${this.props.cost}</p>
             <span className="popuptext" id={popupid}>{this.props.review}</span>
             </div>
-        <button onClick={()=>
+        <button className="btn" onClick={()=>
                 {this.props.orderItem(
                     this.props.id, 
                     this.props.name, 

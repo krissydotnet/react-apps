@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CloseButton from './CloseButton';
 
 class ItemDetails extends Component {
 
@@ -14,38 +15,44 @@ class ItemDetails extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.addToCart(this.props.itemId, this.props.quantity, this.props.cost);
+        this.props.addToCart(this.props.item, this.props.quantity);
         e.currentTarget.reset();
     }
 
     render() {
-        const menuItem = this.props.items.find(item => (item.itemId === this.props.itemId))
-        console.log(this.props.menuItem);
-        console.log(this.props.itemId)
-        const name = "Red Velvet Cupcake";
-        const image = "https://drive.google.com/uc?export=view&id=1WXE-dkglsk6aE7DaPhnkdCNmhBLsajvi";
-        const description = "Decedent red velvet cupcake with cream cheese icing";
-        const cost = 2.99
-        const quantity = 1
+        const name = this.props.item.name;
+        const image = this.props.item.image;
+        const description = this.props.item.description;
+        const cost = this.props.item.cost;
+        const quantity = this.props.quantity;
 
 
         return (
+            <div className="modal">
             <section id="item-details" className="item-details-container">
+            
+            <div className="item-details-header" >
+                <CloseButton closeWindow={this.props.closeWindow} />
+            </div>
+            <div className="item-details-main">
                 <h1 className="title">Item Details</h1>
                 <form onSubmit={this.handleSubmit}>
                 <div className="item-details">
                     <div className="details-left">
                     <img className="item-image" src={image} alt={name}/></div>
                     <div className="details-right">
+
                     <h3 className="item-name">{name}</h3>
                     <p className="item-description">{description}</p>
                     <p className="item-price" 
                     data-price={cost}>Price: ${cost}</p>
-                    <p className="item-quantity">Quantity:
+                    <p className="item-quantity"><label >Quantity:</label>
                     <input type="number"  
                              defaultValue={1}
                              onChange={this.handleChange}
                              min={1}
+                             name="quantity"
+                             id="quantity"
                              ></input>
                     </p>
        
@@ -58,7 +65,9 @@ class ItemDetails extends Component {
 
                 </div>
                 </form>
+                </div>
             </section>
+            </div>
         )
     }
 }

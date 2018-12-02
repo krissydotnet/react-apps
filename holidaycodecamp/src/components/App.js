@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Menu from './Menu';
 import MenuItems from './MenuItems';
-import Checkout from './Checkout';
+import ItemDetails from './ItemDetails';
+import ShoppingCart from './ShoppingCart';
 
 class App extends Component {
   state = {
@@ -12,21 +13,24 @@ class App extends Component {
         name: "Frosted Creamcheese Cupcake",
         cost: 2.99,
         image: "https://drive.google.com/uc?export=view&id=1uoH1X_pcjLDxgF8MHajQYZnZjL08UMze",
-        review: "Best you've ever had."
+        review: "Best you've ever had.",
+        description: "Decedent red velvet cupcake with cream cheese icing"
       },
       {
         id: "spice",
         name: "Pumpkin Spice Cupcake",
         cost: 2.99,
         image: "https://drive.google.com/uc?export=view&id=1OO48GolmtdqT72EaI0-nbNVsgWDsugY2",
-        review: "They're great!!!!"
+        review: "They're great!!!!",
+        description: "Decedent red velvet cupcake with cream cheese icing"
       },
       {
         id: "brulee",
         name: "Caramel Brulee Cupcake",
         cost: 2.99,
         image: "https://drive.google.com/uc?export=view&id=1WXE-dkglsk6aE7DaPhnkdCNmhBLsajvi",
-        review: "These are the best cupcakes"
+        review: "These are the best cupcakes",
+        description: "Decedent red velvet cupcake with cream cheese icing"
       },
     ],
     orderTotal: 2.99,
@@ -34,8 +38,8 @@ class App extends Component {
     itemPrice: 2.99,
     itemId: 0,
     quantity: 1,
-    isCheckoutHidden: true,
-    isMenuHidden: false,
+    isItemDetailsHidden: true,
+    isShoppingCartHidden: true,
     shoppingCart: []
   }
   showPopup= (id) => {
@@ -62,71 +66,95 @@ class App extends Component {
     }
     
   ))
-    this.toggleCheckoutHidden();
-    this.toggleMenuHidden();
+    this.toggleItemDetailsHidden();
+
   }
   
 
-  toggleCheckoutHidden = () => {
+  toggleItemDetailsHidden = () => {
     this.setState( prevState => ({
-        isCheckoutHidden: !prevState.isCheckoutHidden
+        isItemDetailsHidden: !prevState.isItemDetailsHidden
     }))
   }
-  toggleMenuHidden = () => {
+  toggleShoppingCartHidden = () => {
     this.setState( prevState => ({
-        isMenuHidden: !prevState.isMenuHidden
+        isShoppingCartHidden: !prevState.isShoppingCartHidden
     }))
   }
 
 
-  handleAddToCart = (itemId, itemQuantity, itemCost) => {
+  handleAddToCart = (item, itemQuantity) => {
 
     this.setState ( prevState => {
       return {
        shoppingCart: [
          ...prevState.shoppingCart,
          {
-          itemId: itemId, 
+          itemId: item.id, 
+          itemName: item.name,
           quantity: itemQuantity,
-          cost: itemCost
+          cost: item.cost
          }
        ]
       }
     })
-
-    this.toggleCheckoutHidden();
-    this.toggleMenuHidden();
-
+    this.toggleItemDetailsHidden();
   }
 
+  handleCloseWindow = () => {
+    this.toggleItemDetailsHidden();
+
+  }
+  handleOpenShoppingCart = () => {
+
+    this.toggleShoppingCartHidden();
+  }
+  handleCloseWindow = () => {
+    this.toggleItemDetailsHidden();
+
+  }
+  getSelectedItem = (itemId) => {
+    return this.state.menuItems.find((element) => {
+      return element.id === itemId;
+    })
+  }
   render() {
-    console.log(this.state.shoppingCart);
+    
     return (
       <div className="App">
     
-        <Header name="Erica’s Cupcakery" slogan="#1 Bakery in PA!" shoppingCart={this.state.shoppingCart}/>
+        <Header name="Erica’s Cupcakery" slogan="#1 Bakery in PA!" shoppingCart={this.state.shoppingCart}
+        openShoppingCart={this.handleOpenShoppingCart}
+        />
         
         <div className="main-container">
           
-          {!this.state.isMenuHidden &&
+          {/* Main  */}
           <div className="container">
           <Menu items={this.state.menuItems}/>
           <MenuItems items={this.state.menuItems} handleClick={this.showPopup}
           orderItem={this.handleOrderItem}
           />
           </div>
-          }
 
-          {!this.state.isCheckoutHidden && 
-          <Checkout 
+          {/* Item Details */}
+          {!this.state.isItemDetailsHidden && 
+          <ItemDetails 
+          item={this.getSelectedItem(this.state.itemId)}
           itemId={this.state.itemId}
-          cost={this.state.itemPrice} 
           orderTotal={this.state.orderTotal}
           quantity={this.state.quantity} 
-          name={this.state.itemDesc}
           changeQuantity={this.calculateTotal}
           addToCart={this.handleAddToCart}
+          closeWindow={this.handleCloseWindow}
           />}
+            {/* Shopping Cart*/}
+            {!this.state.isShoppingCartHidden && 
+          <ShoppingCart  
+          shoppingCart={this.state.shoppingCart}
+          closeWindow={this.toggleShoppingCartHidden}
+          />
+          }
          
          </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Cart from './Cart';
+import ShoppingCartIcon from './ShoppingCartIcon';
 
 class Header extends Component {
 
@@ -12,7 +12,9 @@ class Header extends Component {
                 <header>
                 <h1><i className="fas fa-mortar-pestle"></i>{this.props.name}</h1>
                 <button id="message" onClick={this.openAlert}>{this.props.slogan}</button>
-                <Cart shoppingCart={this.props.shoppingCart}/>
+                <ShoppingCartIcon 
+                    shoppingCart={this.props.shoppingCart} 
+                    openShoppingCart={this.props.openShoppingCart}/>
                 </header>
         );
     }
