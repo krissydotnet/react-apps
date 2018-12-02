@@ -4,6 +4,7 @@ import Menu from './Menu';
 import MenuItems from './MenuItems';
 import ItemDetails from './ItemDetails';
 import ShoppingCart from './ShoppingCart';
+import Confirmation from './Confirmation';
 
 class App extends Component {
   state = {
@@ -40,6 +41,7 @@ class App extends Component {
     quantity: 1,
     isItemDetailsHidden: true,
     isShoppingCartHidden: true,
+    isConfirmationHidden: true,
     shoppingCart: []
   }
   showPopup= (id) => {
@@ -81,10 +83,13 @@ class App extends Component {
         isShoppingCartHidden: !prevState.isShoppingCartHidden
     }))
   }
-
+  toggleConfirmationHidden = () => {
+    this.setState( prevState => ({
+        isConfirmationHidden: !prevState.isConfirmationHidden
+    }))
+  }
 
   handleAddToCart = (item, itemQuantity) => {
-
     this.setState ( prevState => {
       return {
        shoppingCart: [
@@ -97,6 +102,7 @@ class App extends Component {
          }
        ]
       }
+    
     })
     this.toggleItemDetailsHidden();
   }
@@ -105,18 +111,28 @@ class App extends Component {
     this.toggleItemDetailsHidden();
 
   }
+
   handleOpenShoppingCart = () => {
 
     this.toggleShoppingCartHidden();
   }
-  handleCloseWindow = () => {
-    this.toggleItemDetailsHidden();
 
-  }
   getSelectedItem = (itemId) => {
     return this.state.menuItems.find((element) => {
       return element.id === itemId;
     })
+  }
+  clearShoppingCart = () => {
+    this.setState ( prevState => {
+      return {
+       shoppingCart: []
+      }
+    })
+  }
+  handleSubmitOrder = () => {
+    this.clearShoppingCart();
+    this.toggleShoppingCartHidden();
+    this.toggleConfirmationHidden();
   }
   render() {
     
@@ -148,11 +164,21 @@ class App extends Component {
           addToCart={this.handleAddToCart}
           closeWindow={this.handleCloseWindow}
           />}
-            {/* Shopping Cart*/}
-            {!this.state.isShoppingCartHidden && 
+
+          {/* Shopping Cart*/}
+          {!this.state.isShoppingCartHidden && 
           <ShoppingCart  
           shoppingCart={this.state.shoppingCart}
           closeWindow={this.toggleShoppingCartHidden}
+          submitOrder=
+          {this.handleSubmitOrder}
+          />
+          }
+
+          {/* Confirmation*/}
+            {!this.state.isConfirmationHidden && 
+          <Confirmation  
+          closeWindow={this.toggleConfirmationHidden}
           />
           }
          

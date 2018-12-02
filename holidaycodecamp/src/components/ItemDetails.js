@@ -30,10 +30,7 @@ class ItemDetails extends Component {
         return (
             <div className="modal">
             <section id="item-details" className="item-details-container">
-            
-            <div className="item-details-header" >
                 <CloseButton closeWindow={this.props.closeWindow} />
-            </div>
             <div className="item-details-main">
                 <h1 className="title">Item Details</h1>
                 <form onSubmit={this.handleSubmit}>

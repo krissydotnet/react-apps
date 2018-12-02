@@ -213,20 +213,18 @@ button:focus {
 
 }
 .close-btn {
+  float:right;
   padding: .5rem;
 }
+
 .close-btn:hover {
   color: #3D155E;
   transform: scale(1.25);
 }
 
-.item-details-header, .shopping-cart-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: right;
-}
-.item-details-main, .shopping-cart-header {
-  padding: 0 2rem 2rem 2rem;
+
+.item-details-main, .shopping-cart-main {
+  padding: 2rem;
 }
 .close-btn {
   text-align: right;
@@ -260,7 +258,7 @@ button:focus {
 }
 /* Shopping Cart Styles */
 
-.shopping-cart-container {
+.shopping-cart-container, .confirmation-container {
   margin: 0 auto;
   padding: 0;
   background-color: white;
@@ -269,13 +267,19 @@ button:focus {
 
 }
 .cart-header {
+  margin-top: 1rem;
   font-weight: bold;
 }
-.cart-item-container {
+.cart-item-container,.cart-header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: stretch;
+}
+.cart-item-container {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 1rem 0;
 }
 .cart-item-name {
   flex-basis: 50%;
@@ -288,6 +292,17 @@ button:focus {
   text-align: right;
 
 }
+.shopping-cart-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Confirmation Styles */
+
+.confirmation-main {
+  padding: 2rem;
+}
+
 /* Footer Styles */
 footer {
   margin-top: 1rem;
