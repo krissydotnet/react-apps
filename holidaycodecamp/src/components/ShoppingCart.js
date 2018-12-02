@@ -9,6 +9,11 @@ class ShoppingCart extends Component {
             this.props.shoppingCart.map((item) =>
             <ShoppingCartItem  cartItem={item} key={item.itemId}/>
         )
+        const orderTotal =this.props.shoppingCart.map((item) => {
+            return (item.quantity * item.cost)
+        }).reduce((total, subtotal) => {
+            return total + subtotal;
+        })
         
         return (
            <div className="modal">
@@ -26,6 +31,9 @@ class ShoppingCart extends Component {
             
             </div> 
                 {shoppingCartItems}
+                <div class="cart-total">
+                Order Total:  ${orderTotal}
+                </div>
             </div>
             <div className="shopping-cart-footer">
                 <button className="btn" onClick={this.props.submitOrder}>Submit Order</button>

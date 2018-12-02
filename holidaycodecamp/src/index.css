@@ -292,6 +292,11 @@ button:focus {
   text-align: right;
 
 }
+.cart-total {
+  margin-top: 1rem;
+  margin-right: 2rem;
+  text-align: right;
+}
 .shopping-cart-footer {
   display: flex;
   justify-content: center;
